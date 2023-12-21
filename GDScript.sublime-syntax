@@ -96,7 +96,7 @@ contexts:
     - include: functions
     - include: signals
 
-    - match: '(?i:\b(?:(onready)\s+)?(var))\s+({{identifier}}):([a-zA-Z0-9_]+)'
+    - match: '(?i:\b(?:(onready)\s+)?(var))\s+({{identifier}})\s*:\s*([a-zA-Z0-9_]+)'
       captures:
         1: keyword.other.onready.gdscript
         2: storage.type.var.gdscript
@@ -200,7 +200,7 @@ contexts:
             - meta_scope: meta.function.parameters.gdscript
             - match: \(
               scope: punctuation.section.parameters.begin.gdscript
-            - match: '({{identifier}}):([a-zA-Z0-9_]+)'
+            - match: '({{identifier}})\s*:\s*([a-zA-Z0-9_]+)'
               captures: 
                 1: variable.parameter.gdscript
                 2: storage.type.basic.gdscript
