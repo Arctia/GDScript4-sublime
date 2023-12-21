@@ -25,14 +25,13 @@ contexts:
     - include: docstrings
     - include: expressions
     - include: assignments
-
-    - match: \bself\b
+    - match: \bself|class_name\b
       scope: keyword.self.gdscript
     - match: \bawait\b
       scope: keyword.self.gdscript
     - match: \bvar\b
       scope: keyword.var.gdscript
-    - match: '\$\b[a-zA-Z0-9\\]+\b'
+    - match: '\$\b[a-zA-Z0-9\\_]+\b'
       scope: comment.node.dollar-node
     - match: '%\b\w+\b'
       scope: comment.node.percentage-node
@@ -197,6 +196,10 @@ contexts:
               scope: punctuation.section.parameters.begin.gdscript
             - match: '{{identifier}}'
               scope: variable.parameter.gdscript
+            #- match: ':'
+            #  scope: punctuation.separator.parameters.gdscript
+            - match: ':[a-zA-Z0-9_]+'
+              scope: storage.type.basic.gdscript
             - match: ','
               scope: punctuation.separator.parameters.gdscript
             - match: \)
@@ -315,7 +318,7 @@ contexts:
       scope: keyword.self
     - match: \btrue|false|null\b
       scope: constant.language.gdscript
-    - match: '\$\b[a-zA-Z0-9\\]+\b'
+    - match: '\$\b[a-zA-Z0-9\\_]+\b'
       scope: comment.node.dollar-node
     - match: '%\b\w+\b'
       scope: comment.node.percentage-node
