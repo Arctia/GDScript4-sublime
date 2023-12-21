@@ -25,7 +25,7 @@ contexts:
     - include: docstrings
     - include: expressions
     - include: assignments
-    - match: \bself|class_name\b
+    - match: '\b(self|class_name|self)\b'
       scope: keyword.self.gdscript
     - match: \bawait\b
       scope: keyword.self.gdscript
@@ -96,6 +96,12 @@ contexts:
     - include: functions
     - include: signals
 
+    - match: '(?i:\b(?:(onready)\s+)?(var))\s+({{identifier}}):([a-zA-Z0-9_]+)'
+      captures:
+        1: keyword.other.onready.gdscript
+        2: storage.type.var.gdscript
+        3: variable.other.gdscript
+        4: storage.type
     - match: '(?i:\b(?:(onready)\s+)?(var))\s+({{identifier}})'
       captures:
         1: keyword.other.onready.gdscript
@@ -194,12 +200,13 @@ contexts:
             - meta_scope: meta.function.parameters.gdscript
             - match: \(
               scope: punctuation.section.parameters.begin.gdscript
-            - match: '{{identifier}}'
-              scope: variable.parameter.gdscript
-            #- match: ':'
-            #  scope: punctuation.separator.parameters.gdscript
-            - match: ':[a-zA-Z0-9_]+'
-              scope: storage.type.basic.gdscript
+            - match: '({{identifier}}):([a-zA-Z0-9_]+)'
+              captures: 
+                1: variable.parameter.gdscript
+                2: storage.type.basic.gdscript
+            - match: '({{identifier}})'
+              captures: 
+                1: variable.parameter.gdscript
             - match: ','
               scope: punctuation.separator.parameters.gdscript
             - match: \)
@@ -314,7 +321,7 @@ contexts:
     - include: expressions
     - match: ','
       scope: punctuation.separator.arguments.gdscript
-    - match: \bself\b
+    - match: '\b(self)\b'
       scope: keyword.self
     - match: \btrue|false|null\b
       scope: constant.language.gdscript
