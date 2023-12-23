@@ -237,3 +237,6 @@ signal mysignal
 $Object1234\node2
 
 %Object1234
+
+func state(username:String = "parameter", ) -> void:
+    pass

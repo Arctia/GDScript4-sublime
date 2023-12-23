@@ -36,7 +36,7 @@ contexts:
     - match: '%\b\w+\b'
       scope: comment.node.percentage-node
     - match: '@\b\w+\b'
-      scope: keyword.at-sign
+      scope: keyword.at-sign.gdscript
       
   docstrings:
     - match: ^\s*(""")
@@ -107,6 +107,11 @@ contexts:
         1: keyword.other.onready.gdscript
         2: storage.type.var.gdscript
         3: variable.other.gdscript
+    - match: '\b(?i:(const))\s+({{identifier}})\s*:\s*([a-zA-Z0-9_]+)'
+      captures:
+        1: storage.type.const.gdscript
+        2: variable.other.gdscript
+        3: storage.type
     - match: '\b(?i:(const))\s+({{identifier}})'
       captures:
         1: storage.type.const.gdscript
@@ -200,6 +205,17 @@ contexts:
             - meta_scope: meta.function.parameters.gdscript
             - match: \(
               scope: punctuation.section.parameters.begin.gdscript
+            - match: '({{identifier}})\s*(=)\s*(["a-zA-Z0-9_]+)'
+              captures: 
+                1: variable.parameter.gdscript
+                2: keyword
+                3: variable.parameter.assignment.gdscript
+            - match: '({{identifier}})\s*:\s*([a-zA-Z0-9_]+)\s*(=)\s*(["a-zA-Z0-9_]+)'
+              captures: 
+                1: variable.parameter.gdscript
+                2: storage.type.basic.gdscript
+                3: keyword
+                4: variable.parameter.assignment.gdscript
             - match: '({{identifier}})\s*:\s*([a-zA-Z0-9_]+)'
               captures: 
                 1: variable.parameter.gdscript
