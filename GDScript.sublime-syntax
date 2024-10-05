@@ -23,14 +23,21 @@ contexts:
     - include: assignments
     - include: keywords
     - include: node-paths
+    - include: square-brackets
+    - include: constants
+    - include: objects
+
+  objects:
+    - match: '\b([A-Z][a-zA-Z0-9_]*)\b'
+      scope: keyword.class.object.gdscript
+  
+  constants:
+    - match: '\b([A-Z0-9_]*)\b'
+      scope: keyword.constant.gdscript
 
   folding-regions:
     - match: ^\s*(#region)\s*(.*)$
-
       scope: keyword.control.region.begin.gdscript
-      # captures:
-      #   1: keyword.control.region.begin.gdscript
-      #   2: entity.name.region.gdscript
       push: region-content
     - match: ^\s*(#endregion)\s*$
       scope: keyword.control.region.end.gdscript
@@ -72,7 +79,7 @@ contexts:
     - include: variable-declarations
 
   keywords:
-    - match: '\b(self|class_name|await|var|const|enum|export|setget|tool|static|remote|sync|master|slave)\b'
+    - match: '\b(self|class_name|await|var|const|extends|enum|export|setget|tool|static|remote|sync|master|slave)\b'
       scope: keyword.other.gdscript
 
   node-paths:
@@ -198,10 +205,13 @@ contexts:
       pop: true
 
   class-definition:
-    - match: '^\s*(?i:(class))\s+({{identifier}})\s*'
-      captures:
-        1: storage.type.class.gdscript
-        2: entity.name.type.class.gdscript
+  - match: '^\s*(?i:(class))\s+({{identifier}})\s*(?:(extends)\s+({{identifier}}))?'
+    captures:
+      1: storage.type.class.gdscript
+      2: entity.name.type.class.gdscript
+      3: keyword.other.extends.gdscript
+      4: entity.other.inherited-class.gdscript
+
 
   signals:
     - match: ^\s*signal\b
@@ -260,6 +270,12 @@ contexts:
       scope: comment.line.number-sign.gdscript
       captures:
         1: punctuation.definition.comment.number-sign.gdscript
+
+  square-brackets:
+    - match: '\['
+      scope: punctuation.section.brackets.begin.gdscript
+    - match: '\]'
+      scope: punctuation.section.brackets.end.gdscript
 
   double-quoted-strings:
     - match: \"""
@@ -355,6 +371,9 @@ contexts:
       push:
         - meta_scope: meta.function-call.arguments.gdscript
         - include: arguments-list
+        - include: square-brackets
+        - include: constants
+        - include: objects
 
   yields:
     - match: \byield\b
